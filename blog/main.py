@@ -4,7 +4,7 @@ import uvicorn
 from fastapi import FastAPI, Depends, HTTPException, status, Response
 from .database import engine, SessionLocal, get_db
 from sqlalchemy.orm import Session
-from .routers import blog
+from .routers import blog, user
 
 from . import schemas, models, hashing
 
@@ -14,6 +14,7 @@ models.Base.metadata.create_all(engine)
 app = FastAPI()
 
 app.include_router(blog.router)
+app.include_router(user.router)
 
 """
 def get_db():
