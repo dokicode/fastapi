@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Union
 
 
 class BlogBase(BaseModel):
@@ -28,8 +28,36 @@ class ShowUser(BaseModel):
         orm_mode = True
 
 
+class ShowUserSimple(BaseModel):
+    username: str
+    email: str
+
+    class Config():
+        orm_mode = True
+
+
+
+class ShowUserWithPassword(ShowUserSimple):
+    password: str
+
+
 
 class ShowBlog(Blog):
     title: str
     body: str
-    creator: ShowUser
+    creator: ShowUserSimple
+
+
+class Login(BaseModel):
+    username: str
+    password: str
+
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
